@@ -3,6 +3,7 @@ Cargo.lock
 **/*.rs.bk
 node_modules
 dist
+jemalloc
 .vscode
 xcuserdata/
 *.xcscmblueprint
