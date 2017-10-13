@@ -4,3 +4,6 @@ Cargo.lock
 node_modules
 dist
 .vscode
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
