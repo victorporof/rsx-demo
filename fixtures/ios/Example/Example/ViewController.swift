@@ -23,7 +23,10 @@ class ViewController: UIViewController {
         
         let bridge = Bridge()
         let displayList = bridge.getDisplayList(width: width, height: height)
-        print("\(displayList)")
+
+        let renderer = UIViewRenderer(deviceWidth: width, deviceHeight: height)
+        renderer.mount(parentView: self.view)
+        renderer.draw(displayList: displayList)
     }
 
     override func didReceiveMemoryWarning() {
