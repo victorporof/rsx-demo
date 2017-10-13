@@ -1,0 +1,3 @@
+[submodule "rsx-renderers"]
+	path = rsx-renderers
+	url = https://github.com/victorporof/rsx-renderers.git
