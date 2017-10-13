@@ -1,0 +1,118 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/87/three.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/master/examples/js/vr/WebVR.js" charset="utf-8"></script>
+  <script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"
+    charset="utf-8"></script>
+  <script type="text/javascript" src="renderer.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="main.rs.js" charset="utf-8"></script>
+  <script>
+    const getDisplayList = cwrap('__get_display_list', 'string', ['number', 'number']);
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const displayList = JSON.parse(getDisplayList(width, height));
+
+    const canvas = new RSXCanvasRenderer(width, height, { preventWebGL: true });
+    let promise = canvas.draw(displayList, { renderToTexture: true });
+
+    promise.then(rendered => {
+      let renderer, camera, controls, scene;
+
+      function init() {
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xffffff, 1);
+        document.body.appendChild(renderer.domElement);
+
+        renderer.vr.enabled = true;
+        renderer.vr.standing = true;
+
+        WEBVR.checkAvailability().catch((message) => {
+          document.body.appendChild(WEBVR.getMessageContainer(message));
+        });
+
+        WEBVR.getVRDisplay(function (display) {
+          renderer.vr.setDevice(display);
+          document.body.appendChild(WEBVR.getButton(display, renderer.domElement));
+        });
+
+        camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.001, 100);
+        camera.position.z = 0.5;
+
+        controls = new THREE.TrackballControls(camera);
+        controls.rotateSpeed = 1.0;
+        controls.zoomSpeed = 1.2;
+        controls.panSpeed = 0.8;
+        controls.staticMoving = true;
+        controls.dynamicDampingFactor = 0.3;
+        controls.addEventListener('change', render);
+
+        let material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, depthWrite: false });
+        material.map = new THREE.Texture(rendered);
+        material.map.wrapS = THREE.RepeatWrapping;
+        material.map.repeat.x = - 1;
+        material.map.needsUpdate = true;
+        material.transparent = true;
+
+        let radius = 1;
+        let widthSegments = 16;
+        let heightSegments = 16;
+        let thetaLength = height / width;
+        let plane = new THREE.SphereGeometry(radius, widthSegments, heightSegments, Math.PI / 8, Math.PI / 2, Math.PI / 2 - thetaLength / 2, thetaLength * 2);
+
+        let mesh = new THREE.Mesh(plane, material);
+        mesh.rotation.y = Math.PI;
+        mesh.position.z = 1;
+
+        let roomSize = 100;
+        let roomHeight = 10;
+        let roomSegments = 20;
+
+        let room = new THREE.Mesh(
+          new THREE.BoxGeometry(roomSize, roomHeight, roomSize, roomSegments, roomSegments, roomSegments),
+          new THREE.MeshBasicMaterial({ color: new THREE.Color(0.75, 0.75, 0.75), wireframe: true })
+        );
+
+        scene = new THREE.Scene();
+        scene.add(room);
+        scene.add(mesh);
+
+        window.addEventListener('resize', onWindowResize, false);
+      }
+
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        controls.handleResize();
+      }
+
+      function render() {
+        renderer.render(scene, camera);
+      }
+
+      function animate() {
+        controls.update();
+        render()
+        requestAnimationFrame(animate);
+      }
+
+      init();
+      animate();
+    });
+  </script>
+</body>
+
+</html>
