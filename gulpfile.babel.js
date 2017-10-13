@@ -25,13 +25,13 @@ gulp.task('build-web:copy-html', () =>
     .pipe(gulp.dest(DIST_DIR)));
 
 gulp.task('build-web:copy-js', () =>
-  gulp.src('./rsx-renderers/dist/target-web/bundle/renderer.min.js')
+  gulp.src('./rsx-renderers/dist/target-web/bundle/**/*.{js,map}')
     .pipe(flatten())
     .pipe(gulp.dest(DIST_DIR)));
 
 gulp.task('build-web:copy-rust', () =>
-  gulp.src(`./target/${TARGET}/debug/rsx-demo.js`)
-    .pipe(rename('main.rs.js'))
+  gulp.src(`./target/${TARGET}/debug/**/*.{js,map}`)
+    .pipe(rename({ basename: 'main.rs' }))
     .pipe(gulp.dest(DIST_DIR)));
 
 gulp.task('build-web:cargo', () =>
