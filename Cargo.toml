@@ -9,29 +9,20 @@ authors = ["Victor Porof <victor.porof@gmail.com>"]
 # crate-type = ["staticlib", "cdylib"]
 
 [features]
-default = ["target-web"]
+default = ["target-native"]
 
-target-web = [
-  "rsx/rsx-macro",
-  "rsx/css-macro",
-  "rsx-renderers/json-display-list",
-  "rsx-renderers/target-web"
-]
+target-native = ["rsx-embedding/native-embedding"]
+target-web = ["rsx-embedding/web-embedding"]
+target-ios = ["rsx-embedding/ios-embedding"]
 
-target-ios = [
-  "rsx/rsx-macro",
-  "rsx/css-macro",
-  "rsx-renderers/json-display-list",
-  "rsx-renderers/target-ios"
-]
+[profile.dev]
+codegen-units = 4
 
-target-servo = [
-  "rsx/rsx-macro",
-  "rsx/css-macro",
-  "rsx-renderers/webrender-display-list",
-  "rsx-renderers/target-servo"
-]
+[profile.release]
+opt-level = 3
+lto = true
 
 [dependencies]
 rsx = { git = "https://github.com/victorporof/rsx.git", default-features = false }
-rsx-renderers = { path = "rsx-renderers", default-features = false }
+# rsx-embedding = { git = "https://github.com/victorporof/rsx-embedding.git", default-features = false }
+rsx-embedding = { path = "../reactenstein/rsx-embedding/rsx-targets", default-features = false }

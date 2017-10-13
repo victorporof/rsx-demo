@@ -9,71 +9,46 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+#![feature(box_syntax)]
 #![feature(proc_macro)]
 #![feature(link_args)]
 
 extern crate rsx;
 #[macro_use]
-extern crate rsx_renderers;
+extern crate rsx_embedding;
 
-use rsx::{css, rsx};
-use rsx_renderers::rsx_dom::types::*;
-use rsx_renderers::rsx_stylesheet::types::*;
-
-fn todo_item(done: bool, text_contents: &'static str) -> NodeFragment {
-    let mut stylesheet = css!("src/example.css");
-    rsx! {
-        <view style={stylesheet.get(".list-item")}>
-            <text style={stylesheet.get(if done { ".checkbox-checked" } else { ".checkbox-empty" }) }>
-            {
-                if done { "☑" } else { "☐" }
-            }
-            </text>
-            <text style={stylesheet.get(".text")}>
-            {
-                text_contents
-            }
-            </text>
-        </view>
-    }
-}
-
-fn question() -> NodeFragment {
-    let mut stylesheet = css!("src/example.css");
-    rsx! {
-        <text style={stylesheet.get(".list-item")}>
-            ???
-        </text>
-    }
-}
-
-fn todo_list() -> NodeFragment {
-    let mut stylesheet = css!("src/example.css");
-    rsx! {
-        <view style={stylesheet.get(".list")}>
-            { todo_item(true, "Build proof of concept") }
-            { todo_item(false, "Handle user input") }
-            { todo_item(false, "Standardize") }
-            { question() }
-            { todo_item(false, "Profit.") }
-        </view>
-    }
-}
-
-fn root() -> NodeFragment {
-    let mut stylesheet = css!("src/example.css");
-    rsx! {
-        <view style={stylesheet.get(".root")}>
-            <image style={stylesheet.get(".image")} src="http://i.imgur.com/7Ih60Gu.png" />
-            {
-                todo_list()
-            }
-        </view>
-    }
-}
+use rsx::{css, load_font, load_image, rsx};
+use rsx_embedding::rsx_dom::types::*;
+use rsx_embedding::rsx_primitives::prelude::{DOMTree, ResourceGroup};
+use rsx_embedding::rsx_resources::fonts::types::EncodedFont;
+use rsx_embedding::rsx_resources::images::types::{EncodedImage, ImageEncodingFormat};
+use rsx_embedding::rsx_shared::traits::{TDOMNode, TFontCache, TImageCache, TResourceGroup};
+use rsx_embedding::rsx_stylesheet::types::*;
 
 link! {
-    fn render() -> Node {
-        Node::from(root())
+    setup,
+    render
+}
+
+fn setup(resources: &mut ResourceGroup) {
+    let logo = load_image!("fixtures/images/Quantum.png");
+    resources.images().add_image("app://logo.png", &logo);
+
+    let font = load_font!("fixtures/fonts/FreeSans.ttf");
+    resources.fonts().add_font("FreeSans", &font, 0);
+}
+
+fn render() -> DOMTree {
+    let mut stylesheet = css!("src/example.css");
+
+    rsx! {
+        <view style={stylesheet.take(".center")}>
+            <view style={stylesheet.take(".root")}>
+                <image style={stylesheet.take(".image")} src="app://logo.png" />
+                <text style={stylesheet.take(".text")}>
+                    { "Hello World!" }
+                </text>
+            </view>
+        </view>
     }
 }

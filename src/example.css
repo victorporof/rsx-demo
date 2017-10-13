@@ -9,55 +9,33 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+.center {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
 .root {
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 0, 0, 0.1);
+    width: 500px;
+    height: 120px;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
 }
 
 .image {
-  width: 200px;
-  height: 200px;
-  margin-right: 20px;
-  border-top: 2px solid blue;
-  border-right: 2px solid orange;
-  border-bottom: 2px solid orangered;
-  border-left: 2px solid red;
-}
-
-.list {
-  margin-top: 20px;
-  align-items: flex-start;
-  width: 50%;
-  height: 50%;
-  background: rgba(0, 0, 0, 0.05);
-}
-
-.list-item {
-  flex-direction: row;
-  background: rgba(0, 0, 0, 0.01);
-  width: 100%;
-  height: 18px;
-  margin-top: 10px;
-}
-
-.checkbox-empty {
-  width: 18px;
-  height: 100%;
-  margin-left: 30px;
-  border-left: 5px solid red;
-  color: red;
-}
-
-.checkbox-checked {
-  width: 18px;
-  height: 100%;
-  margin-left: 30px;
-  border-left: 5px solid green;
-  color: green;
+    background-color: rgba(0, 128, 0, 0.1);
+    opacity: 0.5;
+    width: 80px;
+    margin-right: 20px;
 }
 
 .text {
-  flex-grow: 1;
+    background-color: rgba(0, 0, 255, 0.1);
+    color: #333;
+    height: 25px;
+    flex-shrink: 1;
+    font-size: 18px;
+    overflow: hidden;
 }

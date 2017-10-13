@@ -13,17 +13,28 @@
   <script type="text/javascript" src="renderer.min.js" charset="utf-8"></script>
   <script type="text/javascript" src="main.rs.js" charset="utf-8"></script>
   <script>
-    const getDisplayList = cwrap('__get_display_list', 'string', ['number', 'number']);
+    const { cwrap } = Module();
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const displayList = JSON.parse(getDisplayList(width, height));
+    const initializeRuntime = cwrap('initialize_runtime');
+    const getDisplayListDiff = cwrap('get_display_list_diff', 'string', ['number', 'number']);
+    const getResourceUpdates = cwrap('get_resource_updates', 'string');
 
-    const dom = new RSXDOMRenderer(width, height);
-    dom.mount(document.body);
-    dom.draw(displayList);
+    const renderer = new RSXDOMRenderer();
+    renderer.mount(document.body);
+
+    function draw() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const displayListDiff = JSON.parse(getDisplayListDiff(width, height));
+      const resourceUpdates = JSON.parse(getResourceUpdates());
+
+      renderer.draw(displayListDiff, resourceUpdates);
+      window.requestAnimationFrame(draw);
+    }
+
+    initializeRuntime();
+    draw();
   </script>
-  <div id="container" />
 </body>
 
 </html>

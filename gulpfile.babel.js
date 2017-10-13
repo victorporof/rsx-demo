@@ -29,7 +29,7 @@ gulp.task('build-web:copy-html', () =>
     .pipe(gulp.dest(DIST_DIR)));
 
 gulp.task('build-web:copy-js', () =>
-  gulp.src('./rsx-renderers/dist/target-web/bundle/**/*.{js,map}')
+  gulp.src('./rsx-renderers/packages/web-renderer/dist/bundle/**/*.{js,map}')
     .pipe(flatten())
     .pipe(gulp.dest(DIST_DIR)));
 
