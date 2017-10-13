@@ -16,6 +16,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let sizeRect = self.view.frame.size
+        let width = Float(sizeRect.width)
+        let height = Float(sizeRect.height)
+        
+        let bridge = Bridge()
+        let displayList = bridge.getDisplayList(width: width, height: height)
+        print("\(displayList)")
     }
 
     override func didReceiveMemoryWarning() {
