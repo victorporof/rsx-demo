@@ -12,6 +12,10 @@
 		570384001F9091B000F37BD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570383FE1F9091B000F37BD0 /* Main.storyboard */; };
 		570384021F9091B000F37BD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570384011F9091B000F37BD0 /* Assets.xcassets */; };
 		570384051F9091B000F37BD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570384031F9091B000F37BD0 /* LaunchScreen.storyboard */; };
+		5703840F1F9092AD00F37BD0 /* Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5703840E1F9092AD00F37BD0 /* Bridge.swift */; };
+		570384141F9093FA00F37BD0 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 570384131F9093FA00F37BD0 /* libresolv.tbd */; };
+		570384161F90940900F37BD0 /* libjemalloc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 570384151F90940900F37BD0 /* libjemalloc.a */; };
+		570384181F9098B200F37BD0 /* librsx_demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 570384171F9098B200F37BD0 /* librsx_demo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,12 @@
 		570384011F9091B000F37BD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		570384041F9091B000F37BD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		570384061F9091B000F37BD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5703840E1F9092AD00F37BD0 /* Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
+		570384101F9092C200F37BD0 /* bridging-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "bridging-header.h"; path = "../bridging-header.h"; sourceTree = "<group>"; };
+		570384111F9092C200F37BD0 /* externals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = externals.h; path = ../externals.h; sourceTree = "<group>"; };
+		570384131F9093FA00F37BD0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		570384151F90940900F37BD0 /* libjemalloc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjemalloc.a; path = ../../../jemalloc/libjemalloc.a; sourceTree = "<group>"; };
+		570384171F9098B200F37BD0 /* librsx_demo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librsx_demo.a; path = ../../../target/universal/release/librsx_demo.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +39,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				570384181F9098B200F37BD0 /* librsx_demo.a in Frameworks */,
+				570384161F90940900F37BD0 /* libjemalloc.a in Frameworks */,
+				570384141F9093FA00F37BD0 /* libresolv.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,8 +51,11 @@
 		570383EE1F9091B000F37BD0 = {
 			isa = PBXGroup;
 			children = (
+				570384101F9092C200F37BD0 /* bridging-header.h */,
+				570384111F9092C200F37BD0 /* externals.h */,
 				570383F91F9091B000F37BD0 /* Example */,
 				570383F81F9091B000F37BD0 /* Products */,
+				570384121F9093FA00F37BD0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,8 +76,19 @@
 				570384011F9091B000F37BD0 /* Assets.xcassets */,
 				570384031F9091B000F37BD0 /* LaunchScreen.storyboard */,
 				570384061F9091B000F37BD0 /* Info.plist */,
+				5703840E1F9092AD00F37BD0 /* Bridge.swift */,
 			);
 			path = Example;
+			sourceTree = "<group>";
+		};
+		570384121F9093FA00F37BD0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				570384171F9098B200F37BD0 /* librsx_demo.a */,
+				570384151F90940900F37BD0 /* libjemalloc.a */,
+				570384131F9093FA00F37BD0 /* libresolv.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +165,7 @@
 			files = (
 				570383FD1F9091B000F37BD0 /* ViewController.swift in Sources */,
 				570383FB1F9091B000F37BD0 /* AppDelegate.swift in Sources */,
+				5703840F1F9092AD00F37BD0 /* Bridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,8 +305,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../../../jemalloc",
+					"$(PROJECT_DIR)/../../../target/universal/release",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.victorporof.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/../bridging-header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -291,8 +324,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../../../jemalloc",
+					"$(PROJECT_DIR)/../../../target/universal/release",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.victorporof.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/../bridging-header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
