@@ -10,12 +10,14 @@
  */
 
 import Foundation
+import SwiftyJSON
 
 class Bridge {
-    func getDisplayList(width: Float, height: Float) -> String {
+    func getDisplayList(width: Float, height: Float) -> JSON {
         let result = __get_display_list(width, height)
         let swift_result = String(cString: result!)
+        let json = JSON(data: swift_result.data(using: .utf8)!)
         __free_display_list(UnsafeMutablePointer(mutating: result))
-        return swift_result
+        return json
     }
 }
