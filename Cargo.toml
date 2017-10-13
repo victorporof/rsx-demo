@@ -1,0 +1,37 @@
+[package]
+name = "rsx-demo"
+version = "0.1.0"
+authors = ["Victor Porof <victor.porof@gmail.com>"]
+
+# [lib]
+# name = "rsx_demo"
+# path = "src/main.rs"
+# crate-type = ["staticlib", "cdylib"]
+
+[features]
+default = ["target-web"]
+
+target-web = [
+  "rsx/rsx-macro",
+  "rsx/css-macro",
+  "rsx-renderers/json-display-list",
+  "rsx-renderers/target-web"
+]
+
+target-ios = [
+  "rsx/rsx-macro",
+  "rsx/css-macro",
+  "rsx-renderers/json-display-list",
+  "rsx-renderers/target-ios"
+]
+
+target-servo = [
+  "rsx/rsx-macro",
+  "rsx/css-macro",
+  "rsx-renderers/webrender-display-list",
+  "rsx-renderers/target-servo"
+]
+
+[dependencies]
+rsx = { git = "https://github.com/victorporof/rsx.git", default-features = false }
+rsx-renderers = { path = "rsx-renderers", default-features = false }
