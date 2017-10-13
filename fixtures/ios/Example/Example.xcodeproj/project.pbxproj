@@ -17,6 +17,7 @@
 		570384141F9093FA00F37BD0 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 570384131F9093FA00F37BD0 /* libresolv.tbd */; };
 		570384161F90940900F37BD0 /* libjemalloc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 570384151F90940900F37BD0 /* libjemalloc.a */; };
 		570384181F9098B200F37BD0 /* librsx_demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 570384171F9098B200F37BD0 /* librsx_demo.a */; };
+		578CF67F1F909A6A005482B5 /* UIViewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578CF67E1F909A6A005482B5 /* UIViewRenderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		570384131F9093FA00F37BD0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		570384151F90940900F37BD0 /* libjemalloc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjemalloc.a; path = ../../../jemalloc/libjemalloc.a; sourceTree = "<group>"; };
 		570384171F9098B200F37BD0 /* librsx_demo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librsx_demo.a; path = ../../../target/universal/release/librsx_demo.a; sourceTree = "<group>"; };
+		578CF67E1F909A6A005482B5 /* UIViewRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewRenderer.swift; path = "../../../rsx-renderers/src/target-ios/UIViewRenderer.swift"; sourceTree = "<group>"; };
 		85D0C89F570D22823053246B /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C36ECBB4322E7C5C609F3C48 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,6 +58,7 @@
 		570383EE1F9091B000F37BD0 = {
 			isa = PBXGroup;
 			children = (
+				578CF67E1F909A6A005482B5 /* UIViewRenderer.swift */,
 				570384101F9092C200F37BD0 /* bridging-header.h */,
 				570384111F9092C200F37BD0 /* externals.h */,
 				570383F91F9091B000F37BD0 /* Example */,
@@ -239,6 +242,7 @@
 				570383FD1F9091B000F37BD0 /* ViewController.swift in Sources */,
 				570383FB1F9091B000F37BD0 /* AppDelegate.swift in Sources */,
 				5703840F1F9092AD00F37BD0 /* Bridge.swift in Sources */,
+				578CF67F1F909A6A005482B5 /* UIViewRenderer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
