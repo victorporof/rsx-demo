@@ -76,7 +76,18 @@ open Example.xcworkspace
 ```
 
 ### Building for native targets with WebRender
-Coming soon!
+Edit the `Cargo.toml` file to specify a native target and make sure the project isn't set up to compile as a library.
+
+#### Cargo.toml
+```toml
+[features]
+default = ["target-servo"]
+```
+
+Then, simply
+```
+cargo run
+```
 
 ## Write your own frontend
 To make changes to the underlying Rust code, simply edit `main.rs` and `example.css` files inside the [src](https://github.com/victorporof/rsx-demo/tree/master/src) directory. For more examples and syntax, see the [RSX](https://github.com/victorporof/rsx) compiler plugin crate.
@@ -85,3 +96,4 @@ To make changes to the underlying Rust code, simply edit `main.rs` and `example.
 1. Editing CSS files require Rust files to be re-saved before building. This is because `cargo build` tries really hard not to rebuild if not necessary, and CSS files aren't on its radar.
 2. Text doesn't contribute to layout. All text nodes have an intrinsic size of 0, until support is added to the layout tree builder. For now, this can be surprising at times when using flexbox.
 3. Animation and user input isn't supported yet. Although animation and a render loop would be trivial to add, and user input support being possibly relatively straightforward as well, there's no implementation or example code yet. Stay tuned.
+4. WebRender targets don't load any resources yet. This means that glyphs and images display as blank rectangles. Although resource loading would be trivial to add, there's no implementation or example code yet. Stay tuned.
