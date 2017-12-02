@@ -12,7 +12,13 @@ First, clone this repository recursively:
 git clone git@github.com:victorporof/rsx-demo.git --recursive
 ```
 
-Then, simply edit the `Cargo.toml` file to specify which target you want to build for.
+Then ensure you're using the Rust toolchain from the nightly channel (for `#![feature]`):
+
+```
+rustup install nightly && rustup default nightly
+```
+
+Finally, edit the `Cargo.toml` file to specify which target you want to build for.  The default target is the Web, so you don't need to edit the file for that target.
 
 ### Building for web targets
 This project is configured by default to build for the web. If you've already edited the `Cargo.toml` file, simply make sure you've specified a web target and the project isn't set up to compile as a library.
@@ -23,7 +29,10 @@ This project is configured by default to build for the web. If you've already ed
 default = ["target-web"]
 ```
 
-As prerequisites, you need to install [emscripten](https://github.com/juj/emsdk) as well as some `npm` development dependencies.
+As prerequisites, you need to install [emscripten](https://github.com/juj/emsdk), the asmjs-unknown-emscripten Rust target, as well as some `npm` development dependencies.
+
+#### Emscripten
+
 ```
 git clone https://github.com/juj/emsdk.git
 cd emsdk
@@ -35,9 +44,20 @@ source ./emsdk_env.sh (Windows: emsdk_env.bat)
 
 If you get stuck, follow the steps outlined in the [official docs](https://kripken.github.io/emscripten-site/docs/getting_started/index.html) or the [github repo](https://github.com/juj/emsdk).
 
-Then, simply
+#### asmjs-unknown-emscripten
+
+```
+rustup target add asmjs-unknown-emscripten
+```
+
+#### NPM Packages
+
 ```
 npm install
+```
+
+Then, simply
+```
 npm start -- --target=asmjs-unknown-emscripten
 ```
 
